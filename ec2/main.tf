@@ -1,19 +1,19 @@
-esource "aws_instance" "API-TEST" {
+resource "aws_instance" "API-TEST" {
     ami = "ami-09d56f8956ab235b3"
     instance_type = var.instance_type
-    subnet_id = data.terraform_remote_state.matiasvpc.outputs.public-subnet
+    subnet_id = data.terraform_remote_state.endavavpc.outputs.public-subnet
     key_name = var.key
-    vpc_security_group_ids = [aws_security_group.allow_ssh.id]
+    vpc_security_group_ids = [aws_security_group.allow_ssh_2.id]
     user_data = file("./scripts/userdata.sh")
     tags = {
       Name = "EC2-APITEST"
     }
 }
 
-resource "aws_security_group" "allow_ssh" {
-    name = "Allow_ssh APITEST"
+resource "aws_security_group" "allow_ssh_2" {
+    name = "Allow_sshAPITEST"
     description = "Allows SSH inbound traffic"
-    vpc_id = data.terraform_remote_state.matiasvpc.outputs.vpc-id
+    vpc_id = data.terraform_remote_state.endavavpc.outputs.vpc-id
 
     ingress {
         description = "SSH FROM VPC"

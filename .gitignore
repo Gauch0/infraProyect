@@ -1,0 +1,4 @@
+*/.terraform/*
+*/.terraform.lock.hcl
+*/terraform.tfstate
+matias-test.pem

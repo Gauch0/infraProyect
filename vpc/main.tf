@@ -1,7 +1,7 @@
 resource "aws_vpc" "vpc-apitest-endava" {
     cidr_block = "10.0.0.0/16"
     tags = {
-        Name = "vpc-matias-test"
+        Name = "vpc-api-test"
         Owner = "Endava"
     }
 }
@@ -29,7 +29,7 @@ resource "aws_subnet" "private-subnet-1" {
 resource "aws_eip" "nat_gw_eip" {
     vpc = true
     tags ={
-        Name = "eip-api-test"
+        Name = "api-test-eip"
     }
 }
 
@@ -42,14 +42,14 @@ resource "aws_internet_gateway" "igw"{
     vpc_id = aws_vpc.vpc-apitest-endava.id
 
     tags = {
-      Name = "igw"
+      Name = "api-test-igw"
     }
 }
 
 
 resource "aws_route_table" "public-rt" {
     vpc_id = aws_vpc.vpc-apitest-endava.id
-    
+
     route{
         cidr_block = "0.0.0.0/0"
         gateway_id = aws_internet_gateway.igw.id
@@ -61,13 +61,13 @@ resource "aws_route_table" "public-rt" {
     }
 
     tags = {
-      Name = "PUBLIC TABLE ROUTE"
+      Name = "API PUBLIC TABLE ROUTE"
     }
 }
 
 resource "aws_route_table" "private-rt" {
     
-    vpc_id = aws_vpc.vpc-matiastest.id
+    vpc_id = aws_vpc.vpc-apitest-endava.id
     
     route{
         cidr_block = "10.0.1.0/24"
@@ -75,7 +75,7 @@ resource "aws_route_table" "private-rt" {
     }
 
     tags = {
-        Name = "PRIVATE TABLE ROUTE"
+        Name = "API PRIVATE TABLE ROUTE"
     }
 }
 
